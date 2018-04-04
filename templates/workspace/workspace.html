@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/fontawesome-all.css') }}">
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom/shadow.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom/custom.css') }}">
+
+    <!-- Custom Scroll -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom-scroll/jquery.mCustomScrollbar.css') }}">
+
+    <!-- Intro JS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='introjs/introjs.css') }}">
+
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='select2/select2.css') }}">
+
+    <!-- Boostrap Form Helper -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrapformhelpers/css/bootstrap-formhelpers.min.css') }}">
+
+    <!-- Halfling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='glyphicons/glyphicons-halflings.css') }}">
+
+    <!-- Toolbar -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='toolbar/jquery.toolbar.css') }}">
+
+    <title>Flow</title>
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><i class="fas fa-rocket"></i> &nbsp; Workspace</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto" data-step="1" data-intro="This is Menu Area, You Can Setting This Project Here">
+                <li class="nav-item dropdown active">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><i class="fas fa-save"></i> &nbsp;<a href="#" onclick=""> Save</a></li>
+                        <li class="dropdown-item"><i class="fas fa-times-circle"></i> &nbsp; <a href="#">Exit to Project Menu</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setting <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item" ><i class="fas fa-edit"></i> &nbsp;<a id="edit-project-button" href="#"> Edit Project</a></li>
+                        <li class="dropdown-item"><i class="fas fa-users"></i> &nbsp; <a href="#">Share Configuration</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item" style="margin-left: 10px;">
+                    <a href="#" class="nav-link btn btn-success btn-sm" style="color: white" onclick="show_data()"><i class="fas fa-play"></i> &nbsp; Run</a>
+                </li>
+                <li class="nav-item" style="margin-left: 10px;">
+                        <a href="#" class="nav-link btn btn-danger btn-sm" style="color: white" onclick="delete_selected()"><i class="fas fa-trash"></i> &nbsp; Delete</a>
+                    </li>
+                <li class="nav-item" style="margin-left: 10px;">
+                    <a href="#" class="nav-link btn btn-warning" style="color: white" onclick="javascript:introJs().start();"><i class="fas fa-question"></i> Help</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2 mCustomScrollbar" id="component-list" data-step="2" data-intro="This is Component Area, You Can Drag and Drop Component to Schema Area">
+                <div class="form-group standart-head-spacing">
+                    <input type="text" class="form-control" id="search" placeholder="Search">
+                </div>
+                <div id="component-list-container">
+                    
+                </div>
+            </div>
+            <div class="col-sm-10" style="padding-left: 0; padding-right: 5px;">
+                <div id="main-panel" class="main-panel" data-step="3" data-intro="This is Schema Area, You Can Design Your Workflow Here">
+                    <div class="droppable" id="content" style="width:5000px; height: 450px;"></div>
+                </div>
+                <br>
+                <h4><b>Message Log: </b></h4>
+                <div id="message-list" class="custom-message-panel" data-step="4" data-intro="This is Message Log, It Tells What Happen in the System">
+                    <p class="text-danger message-text">[Error]: Wrong Input Parameters at Node (<a href="#" onclick="go_to_error(500)">NodeName</a>)</p>
+                    <p class="message-text">[INFO] Map 100% Reduce 50%</p>
+                    <p class="text-warning message-text">[Warning]: Parameter Not Set at Node (<a href="#">NodeName</a>)</p>
+                    <p class="text-warning message-text">[Warning]: Parameter Not Set at Node (<a href="#">NodeName</a>)</p>
+                    <p class="text-warning message-text">[Warning]: Parameter Not Set at Node (<a href="#">NodeName</a>)</p>
+                    <p class="text-warning message-text">[Warning]: Parameter Not Set at Node (<a href="#">NodeName</a>)</p>
+                    <p class="text-warning message-text">[Warning]: Parameter Not Set at Node (<a href="#">NodeName</a>)</p>
+                    <p class="text-warning message-text">[Warning]: Parameter Not Set at Node (<a href="#">NodeName</a>)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="component-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="component-modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4>Component Properties: </h4>
+                    <hr>
+                    <label for="component-feet">Output Feet: </label>
+                    <form action="">
+                        <input type="text" class="form-control bfh-number" id="n_feet" data-min="1">
+                    </form>
+                    <br>
+                    <h4>Component Parameter(s): </h4>
+                    <hr>
+                    <div id="component-modal-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="component-modal-submit">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="edit-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-modal-title">Edit Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="project-title">Title: </label>
+                        <input type="text" name="project-title" id="project-title" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="edit-modal-submit">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JQuery -->
+    <script src="{{ url_for('static', filename='jquery/jquery-1.12.2.min.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Optional JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <!-- Flow Component -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='flow/jquery.flowchart.css') }}">
+    <script src="{{ url_for('static', filename='flow/jquery.flowchart.js') }}"></script>
+
+    <!-- Custom Scroll -->
+    <script src="{{ url_for('static', filename='custom-scroll/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+
+    <!-- Intro JS -->
+    <script src="{{ url_for('static', filename='introjs/intro.js') }}"></script>
+
+    <!-- Select 2 -->
+    <script src="{{ url_for('static', filename='select2/select2.js') }}"></script>
+
+    <!-- Bootstrap Form Helper -->
+    <script src="{{ url_for('static', filename='bootstrapformhelpers/js/bootstrap-formhelpers.js') }}"></script>
+
+    <!-- Toolbar -->
+    <script src="{{ url_for('static', filename='toolbar/jquery.toolbar.js') }}"></script>
+
+    <!-- Code -->
+    <script>
+
+        function go_to_error(x){
+            $("#main-panel").mCustomScrollbar("scrollTo", x);
+        }
+
+        $(document).ready(function() {
+
+            // Set Height
+
+            $('#message-list').height(function(){
+                return $(window).height() * 0.20;
+            });
+
+            $('#component-list').height(function(){
+                return $(window).height() * 0.9;
+            });
+
+            $('#main-panel').height(function(){
+                return $(window).height() * 0.60;
+            });
+
+            $.mCustomScrollbar.defaults.scrollButtons.enable=true;
+
+            $("#component-list").mCustomScrollbar({
+                scrollButtons:{enable:true,scrollType:"stepped"},
+                keyboard:{scrollType:"stepped"},
+                mouseWheel:{scrollAmount:188},
+                theme:"inset-dark",
+                autoExpandScrollbar:true,
+                snapAmount:188,
+                snapOffset:65
+            });
+
+            $("#main-panel").mCustomScrollbar({
+                axis:"x",
+                theme:"inset-dark"
+            });
+
+            $("#message-list").mCustomScrollbar({
+                scrollButtons:{enable:true,scrollType:"stepped"},
+                keyboard:{scrollType:"stepped"},
+                mouseWheel:{scrollAmount:188},
+                theme:"inset-dark",
+                autoExpandScrollbar:true,
+                snapAmount:188,
+                snapOffset:65
+            });
+
+            $("#edit-project-button").click(function(){
+                $("#edit-modal").modal();
+            });
+
+            // Testing Shadow
+            //$("#op1").addClass('shadow-warning');
+        });
+    </script>
+
+    <!-- Main JS -->
+    <script src="{{ url_for('static', filename='main-js/flow.js') }}"></script>
+  </body>
+</html>
